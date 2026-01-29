@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "Ceed Ads 管理画面",
+    "name": "Ceed Ads"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "advertisers": "広告主",
+    "ads": "広告",
+    "settings": "設定",
+    "logout": "ログアウト"
+  },
+  "common": {
+    "save": "保存",
+    "saveChanges": "変更を保存",
+    "saving": "保存中...",
+    "create": "作成",
+    "creating": "作成中...",
+    "add": "追加",
+    "delete": "削除",
+    "duplicate": "複製",
+    "archive": "アーカイブ",
+    "loading": "読み込み中...",
+    "search": "検索",
+    "select": "選択...",
+    "allStatus": "すべてのステータス",
+    "noWebsite": "Webサイトなし",
+    "untitled": "タイトルなし",
+    "id": "ID",
+    "created": "作成日時",
+    "updated": "更新日時",
+    "by": "作成者:",
+    "back": "戻る",
+    "required": "必須",
+    "status": "ステータス"
+  },
+  "status": {
+    "active": "有効",
+    "paused": "一時停止",
+    "archived": "アーカイブ済み",
+    "suspended": "停止中"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "quickActions": "クイックアクション",
+    "manageAdvertisers": "広告主アカウントを管理",
+    "manageAds": "広告キャンペーンとクリエイティブを管理"
+  },
+  "advertisers": {
+    "title": "広告主",
+    "newAdvertiser": "新規広告主",
+    "editAdvertiser": "広告主を編集",
+    "createAdvertiser": "広告主を作成",
+    "backToList": "広告主一覧に戻る",
+    "searchPlaceholder": "広告主を検索...",
+    "noResults": "広告主が見つかりません",
+    "notFound": "広告主が見つかりません",
+    "name": "名前",
+    "websiteUrl": "WebサイトURL"
+  },
+  "ads": {
+    "title": "広告",
+    "newAd": "新規広告",
+    "editAd": "広告を編集",
+    "createAd": "広告を作成",
+    "backToList": "広告一覧に戻る",
+    "searchPlaceholder": "広告を検索...",
+    "noResults": "広告が見つかりません",
+    "notFound": "広告が見つかりません",
+    "advertiser": "広告主",
+    "titleEn": "タイトル (英語)",
+    "titleJp": "タイトル (日本語)",
+    "descriptionEn": "説明 (英語)",
+    "descriptionJp": "説明 (日本語)",
+    "ctaTextEn": "CTAテキスト (英語)",
+    "ctaTextJp": "CTAテキスト (日本語)",
+    "ctaUrl": "CTA URL",
+    "tags": "タグ",
+    "addTag": "タグを追加...",
+    "archivedWarning": "この広告はアーカイブ済みのため編集できません。",
+    "confirmArchive": "この広告をアーカイブしますか？"
+  },
+  "login": {
+    "title": "Ceed Ads 管理画面",
+    "subtitle": "広告主と広告を管理するにはサインインしてください",
+    "signInWithGoogle": "Googleでサインイン",
+    "signingIn": "サインイン中...",
+    "authorizedOnly": "このダッシュボードにアクセスできるのは、許可されたCeedスタッフのみです。"
+  },
+  "errors": {
+    "failedToLoad": "読み込みに失敗しました",
+    "failedToSave": "保存に失敗しました",
+    "failedToCreate": "作成に失敗しました",
+    "failedToUpdate": "更新に失敗しました",
+    "failedToDuplicate": "複製に失敗しました",
+    "failedToArchive": "アーカイブに失敗しました",
+    "failedToCreateAdvertiser": "広告主の作成に失敗しました",
+    "failedToCreateAd": "広告の作成に失敗しました",
+    "failedToUpdateAd": "広告の更新に失敗しました",
+    "unknownError": "不明なエラー",
+    "errorOccurred": "サインイン中にエラーが発生しました"
+  },
+  "placeholders": {
+    "httpsUrl": "https://..."
+  }
+}

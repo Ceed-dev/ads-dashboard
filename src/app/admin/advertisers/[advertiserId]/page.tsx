@@ -1,30 +1,55 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, use } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 import type { AdvertiserDTO } from "@/types/advertiser";
+import { useTranslation } from "@/contexts/LanguageContext";
+
+async function fetchAdvertiser(id: string): Promise<AdvertiserDTO> {
+  const res = await fetch(`/api/admin/advertisers/${id}`);
+  if (!res.ok) throw new Error("Failed to load advertiser");
+  return res.json();
+}
+
+async function updateAdvertiser(id: string, data: { name: string; websiteUrl?: string; status: string }) {
+  const res = await fetch(`/api/admin/advertisers/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to update");
+  return res.json();
+}
 
 export default function AdvertiserDetailPage({ params }: { params: Promise<{ advertiserId: string }> }) {
+  const { t } = useTranslation();
   const { advertiserId } = use(params);
   const router = useRouter();
-  const [advertiser, setAdvertiser] = useState<AdvertiserDTO | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch(`/api/admin/advertisers/${advertiserId}`)
-      .then((res) => res.json())
-      .then(setAdvertiser)
-      .catch(() => setError("Failed to load advertiser"))
-      .finally(() => setLoading(false));
-  }, [advertiserId]);
+  const { data: advertiser, isLoading } = useQuery<AdvertiserDTO>({
+    queryKey: ["advertisers", advertiserId],
+    queryFn: () => fetchAdvertiser(advertiserId),
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data: { name: string; websiteUrl?: string; status: string }) =>
+      updateAdvertiser(advertiserId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["advertisers"] });
+      router.refresh();
+    },
+    onError: (err) => {
+      setError(err instanceof Error ? err.message : t("errors.unknownError"));
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSaving(true);
     setError(null);
 
     const formData = new FormData(e.currentTarget);
@@ -34,58 +59,53 @@ export default function AdvertiserDetailPage({ params }: { params: Promise<{ adv
       status: formData.get("status") as string,
     };
 
-    try {
-      const res = await fetch(`/api/admin/advertisers/${advertiserId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) throw new Error("Failed to update");
-      router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setSaving(false);
-    }
+    mutation.mutate(data);
   };
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
-  if (!advertiser) return <div className="text-center py-8 text-red-600">Advertiser not found</div>;
+  if (isLoading) return <div className="text-center py-8 dark:text-white">{t("common.loading")}</div>;
+  if (!advertiser) return <div className="text-center py-8 text-red-600">{t("advertisers.notFound")}</div>;
 
   return (
     <div>
-      <Link href="/admin/advertisers" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4">
+      <Link href="/admin/advertisers" className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-4">
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Advertisers
+        {t("advertisers.backToList")}
       </Link>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Advertiser</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+        {t("advertisers.editAdvertiser")}
+      </h1>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 max-w-lg">
-        {error && <div className="mb-4 p-4 bg-red-50 text-red-700 rounded-md">{error}</div>}
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 max-w-lg">
+        {error && <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-md">{error}</div>}
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-          <input name="name" required defaultValue={advertiser.name} className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {t("advertisers.name")} *
+          </label>
+          <input name="name" required defaultValue={advertiser.name} className="w-full px-3 py-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Website URL</label>
-          <input name="websiteUrl" type="url" defaultValue={advertiser.websiteUrl || ""} className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {t("advertisers.websiteUrl")}
+          </label>
+          <input name="websiteUrl" type="url" defaultValue={advertiser.websiteUrl || ""} className="w-full px-3 py-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <select name="status" defaultValue={advertiser.status} className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="active">Active</option>
-            <option value="suspended">Suspended</option>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {t("common.status")}
+          </label>
+          <select name="status" defaultValue={advertiser.status} className="w-full px-3 py-2 border dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+            <option value="active">{t("status.active")}</option>
+            <option value="suspended">{t("status.suspended")}</option>
           </select>
         </div>
 
-        <button type="submit" disabled={saving} className="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
+        <button type="submit" disabled={mutation.isPending} className="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
           <Save className="w-4 h-4 mr-2" />
-          {saving ? "Saving..." : "Save Changes"}
+          {mutation.isPending ? t("common.saving") : t("common.saveChanges")}
         </button>
       </form>
     </div>

@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signInWithPopup } from "firebase/auth";
 import { clientAuth, googleProvider } from "@/lib/firebase/client";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 function LoginForm() {
-  const router = useRouter();
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,15 +34,15 @@ function LoginForm() {
       }
 
       // Redirect to admin or original destination
+      // Use window.location.href for full page reload to ensure session cookie is applied
       const redirect = searchParams.get("redirect") || "/admin";
-      router.push(redirect);
-      router.refresh();
+      window.location.href = redirect;
     } catch (err) {
       console.error("Login error:", err);
       setError(
         err instanceof Error
           ? err.message
-          : "An error occurred during sign in"
+          : t("errors.errorOccurred")
       );
       // Sign out from Firebase if session creation failed
       await clientAuth.signOut();
@@ -53,7 +54,7 @@ function LoginForm() {
   return (
     <>
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded">
           {error}
         </div>
       )}
@@ -61,7 +62,7 @@ function LoginForm() {
       <button
         onClick={handleGoogleSignIn}
         disabled={isLoading}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
           <path
@@ -81,31 +82,33 @@ function LoginForm() {
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
           />
         </svg>
-        {isLoading ? "Signing in..." : "Sign in with Google"}
+        {isLoading ? t("login.signingIn") : t("login.signInWithGoogle")}
       </button>
     </>
   );
 }
 
 export default function LoginPage() {
+  const { t } = useTranslation();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Ceed Ads Admin
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            {t("login.title")}
           </h1>
-          <p className="mt-2 text-gray-600">
-            Sign in to manage advertisers and ads
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            {t("login.subtitle")}
           </p>
         </div>
 
-        <Suspense fallback={<div className="text-center">Loading...</div>}>
+        <Suspense fallback={<div className="text-center dark:text-white">{t("common.loading")}</div>}>
           <LoginForm />
         </Suspense>
 
-        <p className="text-center text-sm text-gray-500">
-          Only authorized Ceed staff can access this dashboard.
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+          {t("login.authorizedOnly")}
         </p>
       </div>
     </div>

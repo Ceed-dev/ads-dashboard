@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "Ceed Ads Admin",
+    "name": "Ceed Ads"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "advertisers": "Advertisers",
+    "ads": "Ads",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "common": {
+    "save": "Save",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "create": "Create",
+    "creating": "Creating...",
+    "add": "Add",
+    "delete": "Delete",
+    "duplicate": "Duplicate",
+    "archive": "Archive",
+    "loading": "Loading...",
+    "search": "Search",
+    "select": "Select...",
+    "allStatus": "All Status",
+    "noWebsite": "No website",
+    "untitled": "Untitled",
+    "id": "ID",
+    "created": "Created",
+    "updated": "Updated",
+    "by": "by",
+    "back": "Back",
+    "required": "required",
+    "status": "Status"
+  },
+  "status": {
+    "active": "Active",
+    "paused": "Paused",
+    "archived": "Archived",
+    "suspended": "Suspended"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "quickActions": "Quick Actions",
+    "manageAdvertisers": "Manage advertiser accounts",
+    "manageAds": "Manage ad campaigns and creatives"
+  },
+  "advertisers": {
+    "title": "Advertisers",
+    "newAdvertiser": "New Advertiser",
+    "editAdvertiser": "Edit Advertiser",
+    "createAdvertiser": "Create Advertiser",
+    "backToList": "Back to Advertisers",
+    "searchPlaceholder": "Search advertisers...",
+    "noResults": "No advertisers found",
+    "notFound": "Advertiser not found",
+    "name": "Name",
+    "websiteUrl": "Website URL"
+  },
+  "ads": {
+    "title": "Ads",
+    "newAd": "New Ad",
+    "editAd": "Edit Ad",
+    "createAd": "Create Ad",
+    "backToList": "Back to Ads",
+    "searchPlaceholder": "Search ads...",
+    "noResults": "No ads found",
+    "notFound": "Ad not found",
+    "advertiser": "Advertiser",
+    "titleEn": "Title (EN)",
+    "titleJp": "Title (JP)",
+    "descriptionEn": "Description (EN)",
+    "descriptionJp": "Description (JP)",
+    "ctaTextEn": "CTA Text (EN)",
+    "ctaTextJp": "CTA Text (JP)",
+    "ctaUrl": "CTA URL",
+    "tags": "Tags",
+    "addTag": "Add tag...",
+    "archivedWarning": "This ad is archived and cannot be edited.",
+    "confirmArchive": "Are you sure you want to archive this ad?"
+  },
+  "login": {
+    "title": "Ceed Ads Admin",
+    "subtitle": "Sign in to manage advertisers and ads",
+    "signInWithGoogle": "Sign in with Google",
+    "signingIn": "Signing in...",
+    "authorizedOnly": "Only authorized Ceed staff can access this dashboard."
+  },
+  "errors": {
+    "failedToLoad": "Failed to load",
+    "failedToSave": "Failed to save",
+    "failedToCreate": "Failed to create",
+    "failedToUpdate": "Failed to update",
+    "failedToDuplicate": "Failed to duplicate",
+    "failedToArchive": "Failed to archive",
+    "failedToCreateAdvertiser": "Failed to create advertiser",
+    "failedToCreateAd": "Failed to create ad",
+    "failedToUpdateAd": "Failed to update ad",
+    "unknownError": "Unknown error",
+    "errorOccurred": "An error occurred during sign in"
+  },
+  "placeholders": {
+    "httpsUrl": "https://..."
+  }
+}
