@@ -55,7 +55,15 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     }
 
     const body = await request.json();
-    const input = updateAdSchema.parse(body);
+    const parseResult = updateAdSchema.safeParse(body);
+    if (!parseResult.success) {
+      console.error("Validation error:", parseResult.error.issues);
+      return NextResponse.json(
+        { error: "Validation failed", details: parseResult.error.issues },
+        { status: 400 }
+      );
+    }
+    const input = parseResult.data;
 
     // Publish gate check if setting to active
     if (input.status === "active") {
@@ -93,15 +101,20 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     else if (input.status === "paused" && existing.status !== "paused") action = "ad.pause";
     else if (input.status === "archived") action = "ad.archive";
 
-    // Audit log
-    await logAdMutation(
-      action,
-      user.uid,
-      user.email,
-      adId,
-      existing as unknown as Record<string, unknown>,
-      { ...existing, ...input }
-    );
+    // Audit log (convert to plain objects to avoid Timestamp serialization issues)
+    try {
+      await logAdMutation(
+        action,
+        user.uid,
+        user.email,
+        adId,
+        JSON.parse(JSON.stringify(existing)),
+        JSON.parse(JSON.stringify({ ...existing, ...input }))
+      );
+    } catch (auditError) {
+      console.error("Audit log error (non-fatal):", auditError);
+      // Continue even if audit log fails
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
