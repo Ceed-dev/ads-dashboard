@@ -42,12 +42,14 @@
   },
   "dashboard": {
     "title": "ダッシュボード",
+    "description": "広告管理の概要",
     "quickActions": "クイックアクション",
     "manageAdvertisers": "広告主アカウントを管理",
     "manageAds": "広告キャンペーンとクリエイティブを管理"
   },
   "advertisers": {
     "title": "広告主",
+    "description": "広告主アカウントを管理",
     "newAdvertiser": "新規広告主",
     "editAdvertiser": "広告主を編集",
     "createAdvertiser": "広告主を作成",
@@ -60,6 +62,7 @@
   },
   "ads": {
     "title": "広告",
+    "description": "広告キャンペーンとクリエイティブを管理",
     "newAd": "新規広告",
     "editAd": "広告を編集",
     "createAd": "広告を作成",
@@ -86,6 +89,15 @@
     "signInWithGoogle": "Googleでサインイン",
     "signingIn": "サインイン中...",
     "authorizedOnly": "このダッシュボードにアクセスできるのは、許可されたCeedスタッフのみです。"
+  },
+  "settings": {
+    "title": "設定",
+    "description": "設定を管理",
+    "language": "言語",
+    "languageDescription": "使用する言語を選択",
+    "appearance": "外観",
+    "appearanceDescription": "アプリケーションの見た目をカスタマイズ",
+    "theme": "テーマ"
   },
   "errors": {
     "failedToLoad": "読み込みに失敗しました",

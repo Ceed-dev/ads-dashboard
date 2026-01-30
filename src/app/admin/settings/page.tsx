@@ -1,124 +1,81 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Moon, Sun, Globe } from "lucide-react";
-
-type Theme = "light" | "dark";
-type Language = "en" | "ja";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage, useTranslation } from "@/contexts/LanguageContext";
+import PageHeader from "@/components/admin/PageHeader";
 
 export default function SettingsPage() {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("en");
-  const [mounted, setMounted] = useState(false);
-
-  // Load settings from localStorage on mount
-  useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const savedLanguage = localStorage.getItem("language") as Language | null;
-    if (savedTheme) setTheme(savedTheme);
-    if (savedLanguage) setLanguage(savedLanguage);
-  }, []);
-
-  // Save theme to localStorage and apply
-  const handleThemeChange = (newTheme: Theme) => {
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    // Apply theme to document (for future ThemeContext integration)
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
-  // Save language to localStorage
-  const handleLanguageChange = (newLanguage: Language) => {
-    setLanguage(newLanguage);
-    localStorage.setItem("language", newLanguage);
-    // For future LanguageContext integration
-  };
-
-  if (!mounted) {
-    return null;
-  }
+  const { theme, setTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-500 mt-1">Manage your application preferences</p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <PageHeader
+        title={t("settings.title")}
+        description={t("settings.description")}
+      />
 
-      <div className="space-y-6">
-        {/* Theme Settings Card */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center gap-3 mb-4">
-            {theme === "dark" ? (
-              <Moon className="w-5 h-5 text-gray-700" />
-            ) : (
-              <Sun className="w-5 h-5 text-yellow-500" />
-            )}
-            <div>
-              <h2 className="text-lg font-medium text-gray-900">Appearance</h2>
-              <p className="text-sm text-gray-500">
-                Choose between light and dark mode
-              </p>
+      <div className="flex-1 p-6">
+        <div className="max-w-2xl space-y-6">
+          {/* Language Settings Card */}
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              {t("settings.language")}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              {t("settings.languageDescription")}
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setLanguage("en")}
+                className={`flex-1 rounded-lg border-2 p-4 text-center transition-all ${
+                  language === "en"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold"
+                    : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLanguage("ja")}
+                className={`flex-1 rounded-lg border-2 p-4 text-center transition-all ${
+                  language === "ja"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold"
+                    : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
+                }`}
+              >
+                日本語
+              </button>
             </div>
           </div>
-          <div className="flex gap-4">
-            <button
-              onClick={() => handleThemeChange("light")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors ${
-                theme === "light"
-                  ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-gray-300 text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              <Sun className="w-4 h-4" />
-              Light
-            </button>
-            <button
-              onClick={() => handleThemeChange("dark")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md border transition-colors ${
-                theme === "dark"
-                  ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-gray-300 text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              <Moon className="w-4 h-4" />
-              Dark
-            </button>
-          </div>
-        </div>
 
-        {/* Language Settings Card */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Globe className="w-5 h-5 text-gray-700" />
-            <div>
-              <h2 className="text-lg font-medium text-gray-900">Language</h2>
-              <p className="text-sm text-gray-500">
-                Select your preferred language
-              </p>
+          {/* Theme Settings Card */}
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              {t("settings.appearance")}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              {t("settings.appearanceDescription")}
+            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                {t("settings.theme")}
+              </span>
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5 text-yellow-500" />
+                ) : (
+                  <Moon className="w-5 h-5 text-gray-700" />
+                )}
+              </button>
             </div>
           </div>
-          <select
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value as Language)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="en">English</option>
-            <option value="ja">日本語 (Japanese)</option>
-          </select>
-        </div>
-
-        {/* Info Card */}
-        <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-          <p>
-            Note: Theme and language settings are saved to your browser and will
-            persist across sessions.
-          </p>
         </div>
       </div>
     </div>

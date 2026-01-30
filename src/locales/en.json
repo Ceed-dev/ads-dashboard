@@ -42,12 +42,14 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "description": "Overview of your advertising management",
     "quickActions": "Quick Actions",
     "manageAdvertisers": "Manage advertiser accounts",
     "manageAds": "Manage ad campaigns and creatives"
   },
   "advertisers": {
     "title": "Advertisers",
+    "description": "Manage advertiser accounts",
     "newAdvertiser": "New Advertiser",
     "editAdvertiser": "Edit Advertiser",
     "createAdvertiser": "Create Advertiser",
@@ -60,6 +62,7 @@
   },
   "ads": {
     "title": "Ads",
+    "description": "Manage ad campaigns and creatives",
     "newAd": "New Ad",
     "editAd": "Edit Ad",
     "createAd": "Create Ad",
@@ -86,6 +89,15 @@
     "signInWithGoogle": "Sign in with Google",
     "signingIn": "Signing in...",
     "authorizedOnly": "Only authorized Ceed staff can access this dashboard."
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your preferences",
+    "language": "Language",
+    "languageDescription": "Select your preferred language",
+    "appearance": "Appearance",
+    "appearanceDescription": "Customize the look of the application",
+    "theme": "Theme"
   },
   "errors": {
     "failedToLoad": "Failed to load",

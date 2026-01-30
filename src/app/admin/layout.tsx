@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { verifySession } from "@/lib/auth/session";
-import Header from "@/components/admin/Header";
+import Sidebar from "@/components/admin/Sidebar";
 
 export default async function AdminLayout({
   children,
@@ -14,9 +14,9 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <Header user={user} />
-      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Sidebar user={user} />
+      <main className="ml-64 min-h-screen flex flex-col">
         {children}
       </main>
     </div>
