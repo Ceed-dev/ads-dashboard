@@ -71,6 +71,7 @@
     "noResults": "No ads found",
     "notFound": "Ad not found",
     "advertiser": "Advertiser",
+    "format": "Format",
     "titleEn": "Title (EN)",
     "titleJp": "Title (JP)",
     "descriptionEn": "Description (EN)",
@@ -81,7 +82,62 @@
     "tags": "Tags",
     "addTag": "Add tag...",
     "archivedWarning": "This ad is archived and cannot be edited.",
-    "confirmArchive": "Are you sure you want to archive this ad?"
+    "confirmArchive": "Are you sure you want to archive this ad?",
+    "formats": {
+      "action_card": "Action Card",
+      "lead_gen": "Lead Generation",
+      "static": "Static Display",
+      "followup": "Followup Question"
+    },
+    "leadGen": {
+      "title": "Lead Generation Settings",
+      "placeholderEn": "Placeholder (EN)",
+      "placeholderJp": "Placeholder (JP)",
+      "submitButtonEn": "Submit Button (EN)",
+      "submitButtonJp": "Submit Button (JP)",
+      "autocompleteType": "Autocomplete Type",
+      "successMessageEn": "Success Message (EN)",
+      "successMessageJp": "Success Message (JP)"
+    },
+    "static": {
+      "title": "Static Display Settings",
+      "displayPosition": "Display Position",
+      "positions": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "inline": "Inline",
+        "sidebar": "Sidebar"
+      },
+      "targeting": "Targeting Parameters",
+      "keywords": "Keywords",
+      "addKeyword": "Add keyword...",
+      "geo": "Geographic Regions",
+      "addGeo": "Add region...",
+      "deviceTypes": "Device Types",
+      "devices": {
+        "desktop": "Desktop",
+        "mobile": "Mobile",
+        "tablet": "Tablet"
+      }
+    },
+    "followup": {
+      "title": "Followup Question Settings",
+      "questionTextEn": "Question Text (EN)",
+      "questionTextJp": "Question Text (JP)",
+      "tapAction": "Tap Action",
+      "tapActions": {
+        "expand": "Expand",
+        "redirect": "Redirect",
+        "submit": "Submit"
+      },
+      "tapActionUrl": "Tap Action URL"
+    },
+    "autocompleteTypes": {
+      "email": "Email",
+      "name": "Name",
+      "tel": "Telephone",
+      "off": "Off"
+    }
   },
   "login": {
     "title": "Ceed Ads Admin",

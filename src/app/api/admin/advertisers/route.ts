@@ -6,7 +6,7 @@ import { listAdvertisersSchema, createAdvertiserSchema } from "@/lib/validations
 
 export async function GET(request: NextRequest) {
   try {
-    const user = await requireAnyRole();
+    await requireAnyRole();
 
     const { searchParams } = new URL(request.url);
     const params = listAdvertisersSchema.parse({

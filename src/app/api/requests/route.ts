@@ -12,8 +12,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const input = requestInputSchema.parse(body);
 
-    // Decide ad based on context
-    const decision = await decideAd(input.contextText);
+    // Decide ad based on context (with optional formats filter)
+    const decision = await decideAd(input.contextText, {
+      formats: input.formats,
+    });
 
     // Create request document
     const docRef = collections.requests.doc();

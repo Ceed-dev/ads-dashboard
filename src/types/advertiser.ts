@@ -1,5 +1,17 @@
+/**
+ * Advertiser Types
+ *
+ * Type definitions for advertiser entities stored in Firestore.
+ * Advertisers own ads and can be suspended to pause all their ads.
+ */
+
 import { Timestamp } from "firebase/firestore";
 
+/**
+ * Advertiser status
+ * - active: Can have active ads served
+ * - suspended: All ads auto-paused, cannot publish new ads
+ */
 export type AdvertiserStatus = "active" | "suspended";
 
 export interface AdvertiserMeta {

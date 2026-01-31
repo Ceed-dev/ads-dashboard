@@ -1,14 +1,25 @@
+/**
+ * Ad Database Operations
+ *
+ * Firestore CRUD operations for ads collection.
+ * All writes update meta timestamps and search indexes.
+ */
+
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { collections } from "@/lib/firebase/admin";
 import type { Ad, AdDTO, CreateAdInput, UpdateAdInput } from "@/types/ad";
 import { getAdvertiser } from "./advertisers";
 
+/**
+ * Convert Firestore document to AdDTO for API responses.
+ * Resolves advertiser name and converts timestamps to ISO strings.
+ */
 async function toDTO(doc: FirebaseFirestore.DocumentSnapshot): Promise<AdDTO | null> {
   if (!doc.exists) return null;
   const data = doc.data() as Omit<Ad, "id">;
   const advertiser = await getAdvertiser(data.advertiserId);
 
-  return {
+  const dto: AdDTO = {
     id: doc.id,
     advertiserId: data.advertiserId,
     advertiserName: advertiser?.name || "Unknown",
@@ -26,6 +37,13 @@ async function toDTO(doc: FirebaseFirestore.DocumentSnapshot): Promise<AdDTO | n
       updatedBy: data.meta.updatedBy,
     },
   };
+
+  // Include format-specific configurations if present
+  if (data.leadGenConfig) dto.leadGenConfig = data.leadGenConfig;
+  if (data.staticConfig) dto.staticConfig = data.staticConfig;
+  if (data.followupConfig) dto.followupConfig = data.followupConfig;
+
+  return dto;
 }
 
 export async function getAd(id: string): Promise<AdDTO | null> {
@@ -87,10 +105,11 @@ export async function createAd(
 ): Promise<string> {
   const now = FieldValue.serverTimestamp();
   const docRef = collections.ads.doc();
+  const format = input.format || "action_card";
 
-  await docRef.set({
+  const adData: Record<string, unknown> = {
     advertiserId: input.advertiserId,
-    format: "action_card",
+    format,
     title: input.title,
     description: input.description,
     ctaText: input.ctaText,
@@ -106,7 +125,14 @@ export async function createAd(
     search: {
       titleEngLower: (input.title.eng || "").toLowerCase(),
     },
-  });
+  };
+
+  // Add format-specific configurations
+  if (input.leadGenConfig) adData.leadGenConfig = input.leadGenConfig;
+  if (input.staticConfig) adData.staticConfig = input.staticConfig;
+  if (input.followupConfig) adData.followupConfig = input.followupConfig;
+
+  await docRef.set(adData);
 
   return docRef.id;
 }
@@ -121,6 +147,7 @@ export async function updateAd(
     "meta.updatedBy": actorEmail,
   };
 
+  if (input.format !== undefined) updates.format = input.format;
   if (input.title !== undefined) {
     updates.title = input.title;
     updates["search.titleEngLower"] = (input.title.eng || "").toLowerCase();
@@ -130,6 +157,11 @@ export async function updateAd(
   if (input.ctaUrl !== undefined) updates.ctaUrl = input.ctaUrl;
   if (input.tags !== undefined) updates.tags = input.tags;
   if (input.status !== undefined) updates.status = input.status;
+
+  // Format-specific configurations
+  if (input.leadGenConfig !== undefined) updates.leadGenConfig = input.leadGenConfig;
+  if (input.staticConfig !== undefined) updates.staticConfig = input.staticConfig;
+  if (input.followupConfig !== undefined) updates.followupConfig = input.followupConfig;
 
   await collections.ads.doc(id).update(updates);
 }

@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
       userId: input.userId || null,
       conversationId: input.conversationId || null,
       appId: input.appId || null,
+      submittedEmail: input.submittedEmail || null,
+      eventData: input.eventData || null,
       meta: {
         createdAt: FieldValue.serverTimestamp(),
         updatedAt: FieldValue.serverTimestamp(),

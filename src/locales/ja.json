@@ -71,6 +71,7 @@
     "noResults": "広告が見つかりません",
     "notFound": "広告が見つかりません",
     "advertiser": "広告主",
+    "format": "フォーマット",
     "titleEn": "タイトル (英語)",
     "titleJp": "タイトル (日本語)",
     "descriptionEn": "説明 (英語)",
@@ -81,7 +82,62 @@
     "tags": "タグ",
     "addTag": "タグを追加...",
     "archivedWarning": "この広告はアーカイブ済みのため編集できません。",
-    "confirmArchive": "この広告をアーカイブしますか？"
+    "confirmArchive": "この広告をアーカイブしますか？",
+    "formats": {
+      "action_card": "アクションカード",
+      "lead_gen": "リード獲得",
+      "static": "静的ディスプレイ",
+      "followup": "フォローアップ質問"
+    },
+    "leadGen": {
+      "title": "リード獲得設定",
+      "placeholderEn": "プレースホルダー (英語)",
+      "placeholderJp": "プレースホルダー (日本語)",
+      "submitButtonEn": "送信ボタン (英語)",
+      "submitButtonJp": "送信ボタン (日本語)",
+      "autocompleteType": "オートコンプリートタイプ",
+      "successMessageEn": "成功メッセージ (英語)",
+      "successMessageJp": "成功メッセージ (日本語)"
+    },
+    "static": {
+      "title": "静的ディスプレイ設定",
+      "displayPosition": "表示位置",
+      "positions": {
+        "top": "上部",
+        "bottom": "下部",
+        "inline": "インライン",
+        "sidebar": "サイドバー"
+      },
+      "targeting": "ターゲティングパラメータ",
+      "keywords": "キーワード",
+      "addKeyword": "キーワードを追加...",
+      "geo": "地域",
+      "addGeo": "地域を追加...",
+      "deviceTypes": "デバイスタイプ",
+      "devices": {
+        "desktop": "デスクトップ",
+        "mobile": "モバイル",
+        "tablet": "タブレット"
+      }
+    },
+    "followup": {
+      "title": "フォローアップ質問設定",
+      "questionTextEn": "質問テキスト (英語)",
+      "questionTextJp": "質問テキスト (日本語)",
+      "tapAction": "タップアクション",
+      "tapActions": {
+        "expand": "展開",
+        "redirect": "リダイレクト",
+        "submit": "送信"
+      },
+      "tapActionUrl": "タップアクションURL"
+    },
+    "autocompleteTypes": {
+      "email": "メールアドレス",
+      "name": "名前",
+      "tel": "電話番号",
+      "off": "オフ"
+    }
   },
   "login": {
     "title": "Ceed Ads 管理画面",

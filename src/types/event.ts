@@ -1,10 +1,23 @@
 import { Timestamp } from "firebase/firestore";
 
-export type EventType = "impression" | "click";
+// Event types:
+// - impression: Ad was displayed to user
+// - click: User clicked the CTA button
+// - submit: User submitted a form (lead_gen format)
+// - tap: User tapped on a followup question (followup format)
+export type EventType = "impression" | "click" | "submit" | "tap";
 
 export interface EventMeta {
   createdAt: Timestamp;
   updatedAt: Timestamp;
+}
+
+// Additional data for specific event types
+export interface EventData {
+  // For submit events: collected form data
+  formData?: Record<string, string>;
+  // For tap events: which action was triggered
+  tapAction?: "expand" | "redirect" | "submit";
 }
 
 export interface AdEvent {
@@ -16,6 +29,7 @@ export interface AdEvent {
   userId?: string;
   conversationId?: string;
   appId?: string;
+  eventData?: EventData;
   meta: EventMeta;
 }
 
@@ -27,6 +41,7 @@ export interface CreateEventInput {
   userId?: string;
   conversationId?: string;
   appId?: string;
+  eventData?: EventData;
 }
 
 export interface EventResponse {

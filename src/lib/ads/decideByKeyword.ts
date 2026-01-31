@@ -1,9 +1,32 @@
+/**
+ * Keyword-Based Ad Decision Logic
+ *
+ * Decides which ad to serve based on conversation context.
+ * This is the primary ad decision mechanism for chat-based integrations.
+ *
+ * Decision process:
+ * 1. Detect language from context text
+ * 2. Translate Japanese text to English for matching
+ * 3. Extract keywords from context
+ * 4. Score ads based on tag matches
+ * 5. Return highest-scoring ad (random tie-break)
+ */
+
 import { franc } from "franc";
 import { collections } from "@/lib/firebase/admin";
 import { getActiveAds } from "@/lib/db/ads";
 import { translateToEnglish } from "./toEnglish";
-import type { Ad, ResolvedAd } from "@/types/ad";
+import { resolveLocalizedAd } from "./resolveAd";
+import type { Ad, AdFormat, ResolvedAd } from "@/types/ad";
 import type { LanguageCode } from "@/types/request";
+
+/**
+ * Input options for ad decision
+ */
+export interface DecisionOptions {
+  /** Optional array of ad formats to filter by */
+  formats?: AdFormat[];
+}
 
 export interface DecisionResult {
   ad: ResolvedAd | null;
@@ -39,34 +62,16 @@ function scoreAd(ad: Ad, contextWords: string[]): number {
 }
 
 /**
- * Resolve localized fields based on language
+ * Main ad decision logic for keyword-based matching.
+ *
+ * @param contextText - User message or conversation context
+ * @param options - Optional decision options (e.g., formats filter)
+ * @returns Decision result with matched ad or rejection reason
  */
-function resolveLocalizedAd(
-  ad: Ad,
-  advertiserName: string,
-  language: LanguageCode
-): ResolvedAd {
-  const getLocalized = (field: { eng?: string; jpn?: string }): string => {
-    if (language === "jpn" && field.jpn) return field.jpn;
-    return field.eng || "";
-  };
-
-  return {
-    id: ad.id,
-    advertiserId: ad.advertiserId,
-    advertiserName,
-    format: ad.format,
-    title: getLocalized(ad.title),
-    description: getLocalized(ad.description),
-    ctaText: getLocalized(ad.ctaText),
-    ctaUrl: ad.ctaUrl,
-  };
-}
-
-/**
- * Main ad decision logic
- */
-export async function decideAd(contextText: string): Promise<DecisionResult> {
+export async function decideAd(
+  contextText: string,
+  options?: DecisionOptions
+): Promise<DecisionResult> {
   // 1. Detect language
   const language = detectLanguage(contextText);
 
@@ -96,7 +101,12 @@ export async function decideAd(contextText: string): Promise<DecisionResult> {
   const contextWords = normalizedContext.split(/\W+/).filter(Boolean);
 
   // 5. Get active ads
-  const ads = await getActiveAds();
+  let ads = await getActiveAds();
+
+  // 5.1 Filter by formats if specified
+  if (options?.formats && options.formats.length > 0) {
+    ads = ads.filter((ad) => options.formats!.includes(ad.format));
+  }
 
   if (ads.length === 0) {
     return {
