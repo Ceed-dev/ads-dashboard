@@ -137,7 +137,13 @@
       "name": "名前",
       "tel": "電話番号",
       "off": "オフ"
-    }
+    },
+    "cpc": "CPC（米ドル）",
+    "cpcPlaceholder": "例: 0.50",
+    "cpcDescription": "クリック単価（$0.01〜$100）",
+    "baseCTR": "基本CTR",
+    "baseCTRPlaceholder": "例: 0.02",
+    "baseCTRDescription": "想定クリック率（0〜1）"
   },
   "login": {
     "title": "Ceed Ads 管理画面",

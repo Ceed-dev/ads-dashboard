@@ -137,7 +137,13 @@
       "name": "Name",
       "tel": "Telephone",
       "off": "Off"
-    }
+    },
+    "cpc": "CPC (USD)",
+    "cpcPlaceholder": "e.g. 0.50",
+    "cpcDescription": "Cost per click in USD (0.01-100)",
+    "baseCTR": "Base CTR",
+    "baseCTRPlaceholder": "e.g. 0.02",
+    "baseCTRDescription": "Expected click-through rate (0-1)"
   },
   "login": {
     "title": "Ceed Ads Admin",

@@ -94,6 +94,9 @@ export default function NewAdPage() {
     setError(null);
 
     const formData = new FormData(e.currentTarget);
+    const cpcValue = formData.get("cpc") as string;
+    const baseCTRValue = formData.get("baseCTR") as string;
+
     const data: Record<string, unknown> = {
       advertiserId: formData.get("advertiserId") as string,
       format,
@@ -103,6 +106,8 @@ export default function NewAdPage() {
       ctaUrl: formData.get("ctaUrl") as string,
       tags,
       status: formData.get("status") as string,
+      cpc: cpcValue ? parseFloat(cpcValue) : undefined,
+      baseCTR: baseCTRValue ? parseFloat(baseCTRValue) : undefined,
     };
 
     // Add format-specific config
@@ -452,7 +457,35 @@ export default function NewAdPage() {
             </div>
           )}
 
-          <div className="mb-6 mt-6">
+          {/* V2 Ranking Parameters */}
+          <div className="grid grid-cols-2 gap-4 mb-4 mt-6">
+            <div>
+              <label className={labelClass}>{t("ads.cpc")}</label>
+              <input
+                name="cpc"
+                type="number"
+                step="0.01"
+                min="0.01"
+                max="100"
+                placeholder="0.01 - 100"
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>{t("ads.baseCTR")}</label>
+              <input
+                name="baseCTR"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                placeholder="0.00 - 1.00"
+                className={inputClass}
+              />
+            </div>
+          </div>
+
+          <div className="mb-6">
             <label className={labelClass}>{t("common.status")}</label>
             <select name="status" defaultValue="paused" className={inputClass}>
               <option value="paused">{t("status.paused")}</option>

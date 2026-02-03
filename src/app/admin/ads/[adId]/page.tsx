@@ -177,6 +177,8 @@ export default function AdDetailPage({
     setError(null);
 
     const formData = new FormData(e.currentTarget);
+    const cpcValue = formData.get("cpc") as string;
+    const baseCTRValue = formData.get("baseCTR") as string;
     const data: Record<string, unknown> = {
       advertiserId: formData.get("advertiserId") as string,
       format,
@@ -185,6 +187,8 @@ export default function AdDetailPage({
       ctaText: { eng: formData.get("ctaEng") as string, jpn: formData.get("ctaJpn") as string || undefined },
       ctaUrl: formData.get("ctaUrl") as string,
       tags,
+      cpc: cpcValue ? parseFloat(cpcValue) : null,
+      baseCTR: baseCTRValue ? parseFloat(baseCTRValue) : null,
       status: formData.get("status") as string,
     };
 
@@ -642,6 +646,40 @@ export default function AdDetailPage({
               )}
             </div>
           )}
+
+          {/* CPC and Base CTR */}
+          <div className="grid grid-cols-2 gap-4 mb-4 mt-6">
+            <div>
+              <label className={labelClass}>{t("ads.cpc")}</label>
+              <input
+                name="cpc"
+                type="number"
+                step="0.01"
+                min="0.01"
+                max="100"
+                disabled={isArchived}
+                defaultValue={ad.cpc ?? ""}
+                placeholder={t("ads.cpcPlaceholder")}
+                className={inputClass}
+              />
+              <p className="text-xs text-gray-400 mt-1">{t("ads.cpcDescription")}</p>
+            </div>
+            <div>
+              <label className={labelClass}>{t("ads.baseCTR")}</label>
+              <input
+                name="baseCTR"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                disabled={isArchived}
+                defaultValue={ad.baseCTR ?? ""}
+                placeholder={t("ads.baseCTRPlaceholder")}
+                className={inputClass}
+              />
+              <p className="text-xs text-gray-400 mt-1">{t("ads.baseCTRDescription")}</p>
+            </div>
+          </div>
 
           <div className="mb-6 mt-6">
             <label className={labelClass}>{t("common.status")}</label>
