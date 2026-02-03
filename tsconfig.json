@@ -30,5 +30,25 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "ads-dashboard",
+    "ceed-ads",
+    "ceed-publisher-console",
+    "ceed-ads-ios-sdk",
+    "CeedAdsIOSSample",
+    "ClipLoop",
+    "ClipPulse",
+    "english-pal-bot",
+    "finance-dashboard",
+    "InvoiceFlow",
+    "kumo-shogun",
+    "linguapal",
+    "multi-agent-shogun",
+    "quest-web",
+    "quest",
+    "sales-ops-hub",
+    "shungo0222",
+    "synthetic-chat-user-benchmark"
+  ]
 }

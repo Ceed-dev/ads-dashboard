@@ -158,6 +158,10 @@ export interface Ad {
   staticConfig?: StaticConfig;
   /** Configuration for followup format */
   followupConfig?: FollowupConfig;
+  /** Cost per click in USD (v2 ranking) */
+  cpc?: number;
+  /** Base click-through rate (v2 ranking) */
+  baseCTR?: number;
 }
 
 /**
@@ -186,6 +190,10 @@ export interface AdDTO {
   leadGenConfig?: LeadGenConfig;
   staticConfig?: StaticConfig;
   followupConfig?: FollowupConfig;
+  /** Cost per click in USD (v2 ranking) */
+  cpc?: number;
+  /** Base click-through rate (v2 ranking) */
+  baseCTR?: number;
 }
 
 /* ============================================================================
@@ -213,6 +221,10 @@ export interface CreateAdInput {
   staticConfig?: StaticConfig;
   /** Required when format is "followup" */
   followupConfig?: FollowupConfig;
+  /** Cost per click in USD (v2 ranking) */
+  cpc?: number;
+  /** Base click-through rate (v2 ranking) */
+  baseCTR?: number;
 }
 
 /**
@@ -230,6 +242,10 @@ export interface UpdateAdInput {
   leadGenConfig?: LeadGenConfig;
   staticConfig?: StaticConfig;
   followupConfig?: FollowupConfig;
+  /** Cost per click in USD (v2 ranking) */
+  cpc?: number;
+  /** Base click-through rate (v2 ranking) */
+  baseCTR?: number;
 }
 
 /**

@@ -63,6 +63,9 @@ export const createAdSchema = z.object({
   ctaUrl: httpsUrlSchema,
   tags: tagsSchema,
   status: z.enum(["active", "paused"]).default("paused"),
+  // V2 ranking parameters
+  cpc: z.number().min(0.01).max(100).optional(),
+  baseCTR: z.number().min(0).max(1).optional(),
   // Format-specific configurations
   leadGenConfig: leadGenConfigSchema.optional(),
   staticConfig: staticConfigSchema.optional(),
@@ -100,6 +103,9 @@ export const updateAdSchema = z.object({
   ctaUrl: httpsUrlSchema.optional(),
   tags: tagsSchema.optional(),
   status: adStatusSchema.optional(),
+  // V2 ranking parameters
+  cpc: z.number().min(0.01).max(100).optional(),
+  baseCTR: z.number().min(0).max(1).optional(),
   // Format-specific configurations
   leadGenConfig: leadGenConfigSchema.optional(),
   staticConfig: staticConfigSchema.optional(),
