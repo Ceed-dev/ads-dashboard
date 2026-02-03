@@ -186,6 +186,24 @@ The system is designed to support additional formats:
 - Updated README.md with practical setup guide
 - Created CONTEXT.md for AI/developer context
 
+### 2026-02-03: v2 Ranking Parameters Added
+
+#### What Was Done
+- Added cpc (cost per click) field to Ad types
+- Added baseCTR (base click-through rate) field to Ad types
+- Updated validation rules (cpc: 0.01-100 USD, baseCTR: 0-1)
+
+#### Why
+Support for Ad Decision Algorithm v2 which uses CPC-based ranking.
+These fields allow advertisers to set their bid amount and expected CTR.
+
+#### Files Modified
+- src/types/ad.ts: Ad, AdDTO, CreateAdInput, UpdateAdInput
+- src/lib/validations/ads.ts: createAdSchema, updateAdSchema
+
+#### Commits
+- b77fd04: feat(ads): add v2 ranking parameters (cpc, baseCTR)
+
 ## Technical Debt & Known Issues
 
 1. **Prefix search**: Currently basic; consider Algolia for better UX
